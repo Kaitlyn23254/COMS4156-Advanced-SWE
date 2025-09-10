@@ -89,6 +89,8 @@ public class RouteController {
 
       return new ResponseEntity<>("Book not found.", HttpStatus.I_AM_A_TEAPOT);
     } catch (Exception e) {
+          return new ResponseEntity<>("Error occurred when adding a copy to the Book",
+          HttpStatus.OK);
     }
   }
 
