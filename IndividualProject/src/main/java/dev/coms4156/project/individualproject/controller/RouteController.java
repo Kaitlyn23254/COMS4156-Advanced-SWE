@@ -87,8 +87,7 @@ public class RouteController {
   public ResponseEntity<?> addCopy(@PathVariable Integer bookId) {
     try {
       for (Book book : mockApiService.getBooks()) {
-        StringBuilder currBookId = new StringBuilder(book.getId());
-        if (bookId.equals(book.getId())) {
+        if (bookId == book.getId()) {
           book.addCopy();
           return new ResponseEntity<>(book, HttpStatus.OK);
         }

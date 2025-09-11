@@ -7,68 +7,23 @@
    - **Solution:** `Book cmpBook = (Book) obj;`
 
 3. **Error:** `mvn compile` failed because in `Book.java`, `getLanguage()` was not implemented and had no return statement.
-   - **Solution:** Add a `return language;` statement. It compiles now!
+   - **Solution:** Add a `return language;` statement. It compiles now
 
-# Part 1 - Code Clean Up
+# Part 2 - Testing
 
-1. **Error:** `mvn checkstyle:check` warning: in `RouteController.java` there were 2 import package statements that used * statements. 
-   - **Solution:** I deleted the * part of the import statements and let the error messages tell me exactly which classes we needed. **err come back to this**
+1. **Bug:** `Book.java hasCopies()` method has a logic error where it returns true if copiesAvailable >= 0
+   - **Solution:** return copiesAvailable > 0
 
-2. **Error:** missing a Javadoc comment for `RouteController.java class`
-   - **Solution:** Add a multi-line comment explaining the class is the API controller.
+2. **Bug:**  `Book.java returnCopy()` method has a logic error where it only looped through return dates if returnDates was empty
+   - **Solution:** We only loop if returnDates is **not** empty
 
-3. **Error:** incorrect indentation of the return statement in the catch block of `getAvailableBooks() and addCopy() in RouteController.java`
-   - **Solution:** Delete extra indentation.
+3. **Bug:** `Book.java deleteCopy()` method has a logic error where the return false/true statements were switched, resulting in a method that returned false if there was a successful deletion.
+   - **Solution:** Switch return statements
 
-4. **Error:** in `Book.java`, abbreviations shouldn't have more than 1 consecutive uppercase letter.
-   - **Solution:** Rename all instances of BOOK to Book, rename files to Book.java and BookUnitTests.java
+# Part 3 - PMD Analysis
 
-5. **Error:** similarly, lowercase `MockApiService.java`
-   - **Solution:** same as (4)
+1. **Bug:** in `Book.java` there was an unused private variable called `bookmarks` that was never used in the rest of the class.
+   - **Solution:** Delete unused variables.
 
-6. **Error:** in `MockApiService.java, MockApiService()` the catch block has a commented out return statement
-   - **Solution:** Uncomment return statement + ensure proper indentation
-
-7. **Error:** in `MockApiService.java, updateBook()` javadoc comment missing period
-   - **Solution:** add .
-
-8. **Error:** in `MockApiService.java, updateBook()` there should be a empty line preceding @param tag
-   - **Solution:** add new line
-
-9. **Error:**
-   - **Solution:**
-
-10. **Error:**
-   - **Solution:**
-
-# Part 2 - [Next Section]
-
-1. **Error:** 
-   - **Solution:**
-
-2. **Error:**
-   - **Solution:**
-
-3. **Error:**
-   - **Solution:**
-
-4. **Error:**
-   - **Solution:**
-
-5. **Error:**
-   - **Solution:**
-
-6. **Error:** 
-   - **Solution:**
-
-7. **Error:**
-   - **Solution:**
-
-8. **Error:**
-   - **Solution:**
-
-9. **Error:**
-   - **Solution:**
-
-10. **Error:**
-   - **Solution:**
+2. **Bug:** in `RouteController.java`, the `addCopy()` method, there was an unused StringBuilder variable `currBookId` which was part of a larger logic problem where the method was using equals() to compare book IDs (which are ints) instead of ==
+   - **Solution:** deleted Stringbuilder line, changed equals() comparison to ==
