@@ -19,3 +19,9 @@ I googled a bunch of packages + classes in RouteController.java and MockApiServi
     - https://stackoverflow.com/questions/12038238/unable-to-locate-source-xref-to-link-to
 - mvn warning about locating URL to parent project
     - Source: https://lists.apache.org/thread/973h87fwjots1h4hnjvdkk0500cnd5rd 
+
+
+# HW 2 sources:
+1. Understanding how to write mock API calls when testing involves an API
+- https://medium.com/towards-agi/whats-api-mock-a-beginner-s-guide-to-mock-apis-and-why-you-should-use-them-c049dc33ef9d
+- https://www.syncfusion.com/blogs/post/api-mocking-for-unit-tests

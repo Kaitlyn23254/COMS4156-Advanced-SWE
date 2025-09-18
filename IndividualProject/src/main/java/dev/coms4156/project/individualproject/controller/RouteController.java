@@ -115,7 +115,7 @@ public class RouteController {
   @GetMapping({"/book/recommendation"})
   public ResponseEntity<?> getRecommendations() {
     try {
-      ArrayList<Book> allBooks = new ArrayList<>();
+      ArrayList<Book> allBooks = mockApiService.getBooks();
 
       // bubble sort from most to least popular
       for (int i = 0; i < allBooks.size() - 1; i++) {
