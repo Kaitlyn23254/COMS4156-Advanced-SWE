@@ -27,3 +27,9 @@
 
 2. **Bug:** in `RouteController.java`, the `addCopy()` method, there was an unused StringBuilder variable `currBookId` which was part of a larger logic problem where the method was using equals() to compare book IDs (which are ints) instead of ==
    - **Solution:** deleted Stringbuilder line, changed equals() comparison to ==
+
+
+# HW 2 Bugs Found
+1. **Bug:** in `Book.java` the `checkoutCopy()` method has a logic error where it decreased the amount of times checked out instead of increasing.
+   - **Solution** replace -- with ++
+
