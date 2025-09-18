@@ -230,6 +230,10 @@ public class Book implements Comparable<Book> {
     return amountOfTimesCheckedOut;
   }
 
+  public void setAmountOfTimesCheckedOut(int amountOfTimesCheckedOut) {
+    this.amountOfTimesCheckedOut = amountOfTimesCheckedOut;
+  }
+
   public int getCopiesAvailable() {
     return copiesAvailable;
   }
