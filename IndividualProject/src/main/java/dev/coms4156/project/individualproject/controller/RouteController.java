@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -157,7 +158,7 @@ public class RouteController {
    *         or a message indicating an error occurred with an HTTP 500 code.
    */
   @PatchMapping({"/book/{bookId}/checkout"})
-  public ResponseEntity<Object> checkoutBook(@PathVariable Integer bookId) {
+  public ResponseEntity<Object> checkoutBook(@RequestParam Integer bookId) {
     try {
       for (Book book : mockApiService.getBooks()) {
         if (bookId.equals(book.getId())) {

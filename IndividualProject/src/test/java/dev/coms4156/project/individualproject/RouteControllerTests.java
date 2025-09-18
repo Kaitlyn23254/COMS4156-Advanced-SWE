@@ -66,4 +66,20 @@ public class RouteControllerTests {
     long uniqueCount = recommendations.stream().distinct().count();
     assertEquals(10, uniqueCount, "All recommended books should be unique");
   }
+
+  @Test
+  public void testCheckoutBooksSucess() {
+    List<Book> books = new ArrayList<>();
+
+    Book book1 = new Book("Title1", 1);
+    book1.setCopiesAvailable(5);
+
+    books.add(book1);
+
+    routeController = new RouteController(new FakeMockApiService(books));
+    ResponseEntity<?> response = routeController.checkoutBook(1);
+
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+  }
+
 }

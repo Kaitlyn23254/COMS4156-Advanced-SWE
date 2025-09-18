@@ -238,6 +238,10 @@ public class Book implements Comparable<Book> {
     return copiesAvailable;
   }
 
+  public void setCopiesAvailable(int copiesAvailable) {
+    this.copiesAvailable = copiesAvailable;
+  }
+
   public ArrayList<String> getReturnDates() {
     return returnDates;
   }
