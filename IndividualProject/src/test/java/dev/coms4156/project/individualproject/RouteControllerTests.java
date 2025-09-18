@@ -82,4 +82,35 @@ public class RouteControllerTests {
     assertEquals(HttpStatus.OK, response.getStatusCode());
   }
 
+  @Test
+  public void testCheckoutBooksNotAvailable() {
+    List<Book> books = new ArrayList<>();
+
+    Book book1 = new Book("Title1", 1);
+    book1.setCopiesAvailable(0);
+
+    books.add(book1);
+
+    routeController = new RouteController(new FakeMockApiService(books));
+    ResponseEntity<?> response = routeController.checkoutBook(1);
+
+    assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+    assertEquals("Book not available.", response.getBody());
+  }
+
+  @Test
+  public void testCheckoutBooksNotFound() {
+    List<Book> books = new ArrayList<>();
+
+    Book book1 = new Book("Title1", 1);
+    book1.setCopiesAvailable(0);
+
+    books.add(book1);
+
+    routeController = new RouteController(new FakeMockApiService(books));
+    ResponseEntity<?> response = routeController.checkoutBook(1000);
+
+    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    assertEquals("Book not found.", response.getBody());
+  }
 }
