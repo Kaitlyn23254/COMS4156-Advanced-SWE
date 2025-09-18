@@ -3,6 +3,10 @@ package dev.coms4156.project.individualproject.controller;
 import dev.coms4156.project.individualproject.model.Book;
 import dev.coms4156.project.individualproject.service.MockApiService;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -100,4 +104,47 @@ public class RouteController {
     }
   }
 
+
+  /**
+   * Get and return 10 recommended books (5 most popular, 5 random).
+   *
+   * @return A {@code ResponseEntity} containing a list of 10 {@code Book} objects with an
+   *         HTTP 200 response if sucessful, or a message indicating an error occurred with an
+   *         HTTP 500 response.
+   */
+  @GetMapping({"/book/recommendation"})
+  public ResponseEntity<?> getRecommendations() {
+    try {
+      ArrayList<Book> allBooks = new ArrayList<>();
+
+      // bubble sort from most to least popular
+      for (int i = 0; i < allBooks.size() - 1; i++) {
+        for (int j = 0; j < allBooks.size() - i - 1; j++) {
+          Book current = allBooks.get(j);
+          Book next = allBooks.get(j + 1);
+
+          if (current.getAmountOfTimesCheckedOut() < next.getAmountOfTimesCheckedOut()) {
+            allBooks.set(j, next);
+            allBooks.set(j + 1, current);
+          }
+        }
+      }
+
+      List<Book> popular = allBooks.subList(0, 5);
+
+      Set<Book> recommended = new HashSet<>(popular);
+      Random rand = new Random();
+      while (recommended.size() < 10) {
+        Book candidate = allBooks.get(rand.nextInt(allBooks.size()));
+        recommended.add(candidate);
+      }
+
+      ArrayList<Book> recommendations = new ArrayList<>(recommended);
+      return new ResponseEntity<>(recommendations, HttpStatus.OK);
+    } catch (Exception e) {
+      System.err.println(e);
+      return new ResponseEntity<>("Error occurred when getting recommended books",
+        HttpStatus.OK);
+    }
+  }
 }
