@@ -9,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import dev.coms4156.project.individualproject.controller.RouteController;
 import dev.coms4156.project.individualproject.model.Book;
 import dev.coms4156.project.individualproject.service.MockApiService;
-
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,50 +23,47 @@ import org.springframework.http.ResponseEntity;
 @SpringBootTest
 public class RouteControllerTests {
 
-    private RouteController routeController;
+  private RouteController routeController;
 
-    /**
-     * A mockup of a mock API that will always use the same list of books we give it
-     * for consistency in testing's sake.
-     */
-    public static class FakeMockApiService extends MockApiService {
-        private final List<Book> books;
+  /**
+    * A mockup of a mock API that will always use the same list of books we give it
+    * for consistency in testing's sake.
+  */
+  public static class FakeMockApiService extends MockApiService {
+    private final List<Book> books;
 
-        public FakeMockApiService(List<Book> books) {
-            this.books = books;
-        }
-
-        @Override
-        public ArrayList<Book> getBooks() {
-            return new ArrayList<>(books);
-        }
+    public FakeMockApiService(List<Book> books) {
+      this.books = books;
     }
 
-    @BeforeEach
-    public void setUp() {
-        List<Book> books = new ArrayList<>();
+    @Override
+    public ArrayList<Book> getBooks() {
+      return new ArrayList<>(books);
+    }
+  }
 
-        for (int i = 1; i <= 15; i++) {
-            Book book = new Book("Book " + i, i);
-            book.setAmountOfTimesCheckedOut(i);
-            books.add(book);
-        }
+  @Test
+  public void testRecommendationReturnsTenBooks() {
+    List<Book> books = new ArrayList<>();
 
-        routeController = new RouteController(new FakeMockApiService(books));
+    for (int i = 1; i <= 15; i++) {
+      Book book = new Book("Book " + i, i);
+      book.setAmountOfTimesCheckedOut(i);
+      books.add(book);
     }
 
-    @Test
-    public void testRecommendationReturnsTenBooks() {
-        ResponseEntity<?> response = routeController.getRecommendations();
+    routeController = new RouteController(new FakeMockApiService(books));
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+    ResponseEntity<?> response = routeController.getRecommendations();
 
-        Object body = response.getBody();
-        List<Book> recommendations = (List<Book>) body;
+    assertEquals(HttpStatus.OK, response.getStatusCode());
 
-        assertEquals(10, recommendations.size(), "Should return 10 books");
+    Object body = response.getBody();
+    List<Book> recommendations = (List<Book>) body;
 
-        long uniqueCount = recommendations.stream().distinct().count();
-        assertEquals(10, uniqueCount, "All recommended books should be unique");
-    }
+    assertEquals(10, recommendations.size(), "Should return 10 books");
+
+    long uniqueCount = recommendations.stream().distinct().count();
+    assertEquals(10, uniqueCount, "All recommended books should be unique");
+  }
 }
