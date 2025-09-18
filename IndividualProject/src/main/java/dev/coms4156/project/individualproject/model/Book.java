@@ -129,7 +129,7 @@ public class Book implements Comparable<Book> {
   public String checkoutCopy() {
     if (copiesAvailable > 0) {
       copiesAvailable--;
-      amountOfTimesCheckedOut--;
+      amountOfTimesCheckedOut++;
       LocalDate today = LocalDate.now();
       LocalDate dueDate = today.plusWeeks(2);
       String dueDateStr = dueDate.format(DateTimeFormatter.ISO_LOCAL_DATE);
@@ -236,6 +236,10 @@ public class Book implements Comparable<Book> {
 
   public int getCopiesAvailable() {
     return copiesAvailable;
+  }
+
+  public void setCopiesAvailable(int copiesAvailable) {
+    this.copiesAvailable = copiesAvailable;
   }
 
   public ArrayList<String> getReturnDates() {

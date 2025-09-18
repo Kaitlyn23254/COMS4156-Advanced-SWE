@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -145,6 +146,35 @@ public class RouteController {
       System.err.println(e);
       return new ResponseEntity<>("Error occurred when getting recommended books",
         HttpStatus.OK);
+    }
+  }
+
+  /**
+   * Checks out and returns a copy of the {@code} Book object if it exists and is available.
+   *
+   * @param bookId An {@code Integer} representing the unique id of the book.
+   * @return A {@code ResponseEntity} containing the updated {@code Book} object with an
+   *         HTTP 200 response if successful or HTTP 404 if the book is not found,
+   *         or a message indicating an error occurred with an HTTP 500 code.
+   */
+  @PatchMapping({"/book/{bookId}/checkout"})
+  public ResponseEntity<Object> checkoutBook(@RequestParam Integer bookId) {
+    try {
+      for (Book book : mockApiService.getBooks()) {
+        if (bookId.equals(book.getId())) {
+          String checkedout = book.checkoutCopy();
+          if (checkedout != null) {
+            return new ResponseEntity<>(book, HttpStatus.OK);
+          } else {
+            return new ResponseEntity<>("Book not available.", HttpStatus.CONFLICT);
+          }
+        }
+      }
+      return new ResponseEntity<>("Book not found.", HttpStatus.NOT_FOUND);
+
+    } catch (Exception e) {
+      return new ResponseEntity<>("Error occurred when checking out.",
+        HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }

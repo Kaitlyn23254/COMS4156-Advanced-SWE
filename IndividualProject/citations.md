@@ -25,3 +25,9 @@ I googled a bunch of packages + classes in RouteController.java and MockApiServi
 1. Understanding how to write mock API calls when testing involves an API
 - https://medium.com/towards-agi/whats-api-mock-a-beginner-s-guide-to-mock-apis-and-why-you-should-use-them-c049dc33ef9d
 - https://www.syncfusion.com/blogs/post/api-mocking-for-unit-tests
+
+2. How to send a 404 exception
+- https://stackoverflow.com/questions/25422255/how-to-return-404-response-status-in-spring-boot-responsebody-method-return-t
+
+3. Understanding what a ParamRequest is (as opposed to a Path Variable the other RouteController methods use)
+- https://stackoverflow.com/questions/13715811/requestparam-vs-pathvariable 
