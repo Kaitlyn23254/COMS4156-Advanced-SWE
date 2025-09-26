@@ -35,17 +35,17 @@ jobs:
           cache: maven
 
       - name: Build with Maven
-        working-directory: ../../IndividualProject
+        working-directory: ./IndividualProject
         run: mvn -B clean package --file pom.xml
 
       - name: Run tests
-        working-directory: ../../IndividualProject
+        working-directory: ./IndividualProject
         run: mvn test
 
       - name: Run Checkstyle
-        working-directory: ../../IndividualProject
+        working-directory: ./IndividualProject
         run: mvn checkstyle:check
 
       - name: Run PMD
-        working-directory: ../../IndividualProject
+        working-directory: ./IndividualProject
         run: mvn pmd:pmd
