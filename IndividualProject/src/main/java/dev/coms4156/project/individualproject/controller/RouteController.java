@@ -98,10 +98,10 @@ public class RouteController {
         }
       }
 
-      return new ResponseEntity<>("Book not found.", HttpStatus.I_AM_A_TEAPOT);
+      return new ResponseEntity<>("Book not found.", HttpStatus.NOT_FOUND);
     } catch (Exception e) {
       return new ResponseEntity<>("Error occurred when adding a copy to the Book",
-        HttpStatus.OK);
+        HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
