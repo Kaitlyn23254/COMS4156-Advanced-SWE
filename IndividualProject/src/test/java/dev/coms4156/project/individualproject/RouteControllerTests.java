@@ -113,4 +113,65 @@ public class RouteControllerTests {
     assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     assertEquals("Book not found.", response.getBody());
   }
+
+  @Test
+  public void testGetAvailableBooksWithAvailableBooks() {
+    List<Book> books = new ArrayList<>();
+
+    Book book1 = new Book("Title1", 1);
+    book1.setCopiesAvailable(0);
+    books.add(book1);
+
+    Book book2 = new Book("Title2", 2);
+    book1.setCopiesAvailable(5);
+    books.add(book2);
+
+    routeController = new RouteController(new FakeMockApiService(books));
+    ResponseEntity<?> response = routeController.getAvailableBooks();
+
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+
+    assertNotNull(response.getBody());
+    assertTrue(response.getBody() instanceof List);
+  }
+
+  @Test
+  public void testAddCopyBookExists() {
+    List<Book> books = new ArrayList<>();
+
+    Book book1 = new Book("Title1", 1);
+    book1.setCopiesAvailable(0);
+    books.add(book1);
+
+    routeController = new RouteController(new FakeMockApiService(books));
+    ResponseEntity<?> response = routeController.addCopy(1);
+
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+  }
+
+  @Test
+  public void testAddCopyBookDoesNotExist() {
+    List<Book> books = new ArrayList<>();
+
+    routeController = new RouteController(new FakeMockApiService(books));
+    ResponseEntity<?> response = routeController.addCopy(1);
+
+    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    assertEquals("Book not found.", response.getBody());
+  }
+
+  @Test
+  public void testGetBookIfBookExists() {
+    List<Book> books = new ArrayList<>();
+
+    Book book1 = new Book("Title1", 1);
+    book1.setCopiesAvailable(0);
+    books.add(book1);
+
+    routeController = new RouteController(new FakeMockApiService(books));
+    ResponseEntity<?> response = routeController.getBook(1);
+
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertTrue(response.getBody() instanceof Book);
+  }
 }

@@ -67,7 +67,7 @@ public class RouteController {
       ArrayList<Book> availableBooks = new ArrayList<>();
 
       for (Book book : mockApiService.getBooks()) {
-        if (book.hasCopies()) {
+        if (book.getCopiesAvailable() > 0) {
           availableBooks.add(book);
         }
       }
@@ -76,7 +76,7 @@ public class RouteController {
     } catch (Exception e) {
       System.err.println(e);
       return new ResponseEntity<>("Error occurred when getting all available books",
-        HttpStatus.OK);
+        HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
